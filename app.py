@@ -52,7 +52,7 @@ Temporary CIK    cl cik: 23713c7a99d613c85e280d5f0126acda62624c0b
   └─convert.lua                            dr.s convert.lua: line 9: Converted 0.000000C to 0.000000F (just now)
 </pre>
 
-<div>Now serving <a href="https://pypi.python.org/pypi/exoline/''' + version + '">Exoline ' + version + '''</a></div>
+<div>Now serving <a href="https://pypi.python.org/pypi/exoline/''' + version + '">Exoline ' + version + '''</a>. Fork on <a href="https://github.com/dweaver/exon">github</a>.</div>
 </body></html>'''
 
 @app.route('/api', methods=['POST'])

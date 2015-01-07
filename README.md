@@ -1,11 +1,11 @@
-# Exonline
+# Exon
 
-Exonline is a hosted version of [Exoline](https://github.com/exosite/exoline), which is itself a command line application for a web-based product. So silly. But it has some features (i.e. spec) that would be handy to have as an API, and someday it'd be nice to have a live REPL demo, and this could be the back end for that. You can see Exonline running at [http://exonline.herokuapp.com](http://exonline.herokuapp.com).
+Exon is a hosted version of [Exoline](https://github.com/exosite/exoline), which is itself a command line application for a web-based product. So it's maybe a bit silly. But it has some features (e.g spec) that would be handy to have as an API, and someday it'd be nice to have a live REPL demo, and this could be the back end for that. You can see Exon running at [http://exon.herokuapp.com](http://exon.herokuapp.com).
 
 Here's an example. To call the hosted version of Exoline, do this:
 
 ```
-$ curl exonline.herokuapp.com/api -d '{"args": ["lookup", "fac7..."]}'
+$ curl https://exon.herokuapp.com/api -d '{"args": ["lookup", "fac7..."]}'
 {
     "exitcode": 0,
     "stderr": "",
@@ -16,7 +16,7 @@ $ curl exonline.herokuapp.com/api -d '{"args": ["lookup", "fac7..."]}'
 To see what version of Exoline is running, do this:
 
 ```
-$ curl exonline.herokuapp.com/api -d '{"args": ["--version"]}'
+$ curl https://exon.herokuapp.com/api -d '{"args": ["--version"]}'
 {
     "exitcode": null,
     "stderr": "",
@@ -27,8 +27,7 @@ $ curl exonline.herokuapp.com/api -d '{"args": ["--version"]}'
 If you're working at the command line, you might use the excellent [jq](http://stedolan.github.io/jq/) to reconstitute the output:
 
 ```
-$ curl exonline.herokuapp.com/api -d '{"args": ["twee", "fac7..."]}' | jq .stdout -r
-######################################################################## 100.0%
+$ curl https://exon.herokuapp.com/api -d '{"args": ["twee", "fac7..."]}' | jq .stdout -r
 Attic    cl cik: fac7...
   ├─Battery      dp.s battery: 88 (an hour ago)
   ├─Contact      dp.s contact: closed (an hour ago)
