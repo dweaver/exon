@@ -52,6 +52,7 @@ DEBUG=True
 This gives you debug mode when running locally. Run the server:
 
 ```
+$ source .env
 $ foreman start
 ```
 
