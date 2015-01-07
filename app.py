@@ -16,7 +16,9 @@ sslify = SSLify(app)
 
 @app.route('/')
 def hello():
-    return '''<html><body><div>Exon is a web service for <a href="https://github.com/exosite/exoline">Exoline</a>. Use Exon to run Exoline commands when you don't have Exoline installed. Here's an example that creates a 1 hour temporary device, uses the Exoline spec command to create two dataports and a temperature conversion <a href="http://docs.exosite.com/scripting">Lua script</a>, and does a conversion.</div>
+    return '''<html><body>
+<h1>Exon</h1>
+<div style="width: 60%">Exon is a web service for <a href="https://github.com/exosite/exoline">Exoline</a>. Use Exon to run Exoline commands when you don't have Exoline installed. Here's an example that creates a 1 hour temporary device, uses the Exoline spec command to create two dataports and a temperature conversion <a href="http://docs.exosite.com/scripting">Lua script</a>, and does a conversion.</div>
 
 <pre>
 $ <strong>TEMPCIK=`curl --silent cik.herokuapp.com`</strong>
@@ -52,7 +54,8 @@ Temporary CIK    cl cik: 23713c7a99d613c85e280d5f0126acda62624c0b
   └─convert.lua                            dr.s convert.lua: line 9: Converted 0.000000C to 0.000000F (just now)
 </pre>
 
-<div>Now serving <a href="https://pypi.python.org/pypi/exoline/''' + version + '">Exoline ' + version + '''</a>. Fork on <a href="https://github.com/dweaver/exon">github</a>.</div>
+<div>Now serving <a href="https://pypi.python.org/pypi/exoline/''' + version + '">Exoline ' + version + '''</a>
+<a href="https://github.com/dweaver/exon"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></img>a>
 </body></html>'''
 
 @app.route('/api', methods=['POST'])
