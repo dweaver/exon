@@ -13,38 +13,38 @@ app.debug = True
 
 @app.route('/')
 def hello():
-    return '''<html><body><div>Welcome to Exon, a web service for the <a href="https://github.com/exosite/exoline">Exoline</a> command line tool. Here's an example which creates a 1 hour temporary device, sets it up with a temperature conversion script, and does a conversion.</div>
+    return '''<html><body><div>Welcome to Exon, a web service for <a href="https://github.com/exosite/exoline">Exoline</a>. Exon lets you run Exoline commands without installing Exoline. Here's an example that creates a 1 hour temporary device, sets it up with a temperature conversion script, and does a conversion.</div>
 
-       <pre>
-       $ TEMPCIK=`curl cik.herokuapp.com`
-       $ alias exon='curl --silent exon.herokuapp.com/api '
-       $ exon -d '{"args": ["spec", "'$TEMPCIK'", "http://tinyurl.com/exospec-tempconvert", "--create"]}'
+<pre>
+$ <strong>TEMPCIK=`curl --silent cik.herokuapp.com`</strong>
+$ <strong>alias exon='curl --silent exon.herokuapp.com/api '</strong>
+$ <strong>exon -d '{"args": ["spec", "'$TEMPCIK'", "http://tinyurl.com/exospec-tempconvert", "--create"]}'</strong>
 {
   "exitcode": 0,
   "stderr": "",
   "stdout": "Running spec on: 23713c7a99d613c85e280d5f0126acda62624c0b\ntemp_f not found.\nCreating dataport with name: temp_f, alias: temp_f, format: float\ntemp_c not found.\nCreating dataport with name: temp_c, alias: temp_c, format: float\nconvert.lua not found.\nNew script RID: 2996e4b25b80b08d233a9f8622447a78f87bef6c\nAliased script to: convert.lua"
 }
-       $ exon -d '{"args": ["write", "'$TEMPCIK'", "temp_c", "--value=32"]}'
+$ <strong>exon -d '{"args": ["write", "'$TEMPCIK'", "temp_c", "--value=32"]}'</strong>
 {
   "exitcode": 0,
   "stderr": "",
   "stdout": ""
 }
-       $ exon -d '{"args": ["update", "'$TEMPCIK'", "temp_f", "-"], "stdin": "{\\"name\\": \\"This is the temperature in Fahrenheit\\"}"}'
+$ <strong>exon -d '{"args": ["update", "'$TEMPCIK'", "temp_f", "-"], "stdin": "{\\"name\\": \\"This is the temperature in Fahrenheit\\"}"}'</strong>
 {
   "exitcode": 0,
   "stderr": "",
   "stdout": "ok"
 }
-       $ exon -d '{"args": ["twee", "'$TEMPCIK'"]}' | jq .stdout -r
+$ <strong>exon -d '{"args": ["twee", "'$TEMPCIK'"]}' | jq .stdout -r</strong>
 Temporary CIK    cl cik: 23713c7a99d613c85e280d5f0126acda62624c0b
   ├─temp_c                                 dp.f temp_c: 32.0 (just now)
   ├─This is the temperature in Fahrenheit  dp.f temp_f: 89.6 (just now)
   └─convert.lua                            dr.s convert.lua: line 9: Converted 32.000000C to 89.600000F (just now)
-       </pre>
+</pre>
 
-       <div>Now serving <a href="https://pypi.python.org/pypi/exoline/''' + version + '">Exoline ' + version + '''</a></div>
-       </body></html>'''
+<div>Now serving <a href="https://pypi.python.org/pypi/exoline/''' + version + '">Exoline ' + version + '''</a></div>
+</body></html>'''
 
 @app.route('/api', methods=['POST'])
 def api():
