@@ -16,16 +16,16 @@ sslify = SSLify(app)
 
 @app.route('/')
 def hello():
-    return '''<html><body><div>Exon is a web service for <a href="https://github.com/exosite/exoline">Exoline</a>. Use Exon to run Exoline commands when you don't have Exoline installed. Here's an example that creates a 1 hour temporary device, uses the Exoline spec command to create two dataports, and creates a temperature conversion <a href="http://docs.exosite.com/scripting">Lua script</a>, and does a conversion.</div>
+    return '''<html><body><div>Exon is a web service for <a href="https://github.com/exosite/exoline">Exoline</a>. Use Exon to run Exoline commands when you don't have Exoline installed. Here's an example that creates a 1 hour temporary device, uses the Exoline spec command to create two dataports and a temperature conversion <a href="http://docs.exosite.com/scripting">Lua script</a>, and does a conversion.</div>
 
 <pre>
 $ <strong>TEMPCIK=`curl --silent cik.herokuapp.com`</strong>
-$ <strong>alias exon='curl --silent exon.herokuapp.com/api '</strong>
+$ <strong>alias exon='curl --silent https://exon.herokuapp.com/api '</strong>
 $ <strong>exon -d '{"args": ["spec", "'$TEMPCIK'", "http://tinyurl.com/exospec-tempconvert", "--create"]}'</strong>
 {
   "exitcode": 0,
   "stderr": "",
-  "stdout": "Running spec on: 23713c7a99d613c85e280d5f0126acda62624c0b\ntemp_f not found.\nCreating dataport with name: temp_f, alias: temp_f, format: float\ntemp_c not found.\nCreating dataport with name: temp_c, alias: temp_c, format: float\nconvert.lua not found.\nNew script RID: 2996e4b25b80b08d233a9f8622447a78f87bef6c\nAliased script to: convert.lua"
+  "stdout": "Running spec on: 23713c7a99d613c85e280d5f0126acda62624c0b\\ntemp_f not found.\\nCreating dataport with name: temp_f, alias: temp_f, format: float\\ntemp_c not found.\\nCreating dataport with name: temp_c, alias: temp_c, format: float\\nconvert.lua not found.\\nNew script RID: 2996e4b25b80b08d233a9f8622447a78f87bef6c\\nAliased script to: convert.lua"
 }
 $ <strong>exon -d '{"args": ["write", "'$TEMPCIK'", "temp_c", "--value=0"]}'</strong>
 {
