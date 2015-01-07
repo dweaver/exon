@@ -4,6 +4,8 @@
     <link rel="stylesheet" href="static/bower_components/codemirror-repl/styles/codemirror-repl.css"/>
     <script src="static/bower_components/codemirror-repl/scripts/codemirror-repl.js"></script>
     <script src="static/bower_components/zepto/zepto.min.js"></script>
+    <script src="static/bower_components/lodash/dist/lodash.min.js"></script>
+    <script src="static/js/shellquote.js"></script>
   </head>
   <body>
     <textarea id="repl" autofocus="true"></textarea> 
@@ -13,30 +15,38 @@
           theme: "eclipse"
       });
       repl.print("Exoline {{ version }}");
-      repl.print('Type an exo command, e.g. "tree {{ tempcik }}"');
+      repl.print('Type an exo command, e.g. "exo tree $CIK"');
+      repl.print('$CIK is a 1-hour client for this session.');
+      var ENV = {'CIK': '{{ tempcik }}'};
       repl.eval = function (code) {
           try {
-              var cmds = code.split(/\s+/);
+              var args = shellquote.parse(code, ENV);
+              console.dir(args);
+
               // construct an HTTP request
-              $.ajax({
-                type: 'POST', 
-                url: '/api', 
-                contentType: 'application/json; charset=UTF-8',
-                data: JSON.stringify({args: cmds}),
-                dataType: 'json',
-                success: function(data, status, xhr) {
-                  console.log(status);
-                  console.log(xhr);
-                  repl.print(data.stdout + '\n' + data.stderr);
-                },
-                error: function(xhr, type) {
-                  console.log(xhr);
-                  console.log(type);
-                  repl.print('ajax error: ' + xhr.status);
-                }
-              });
+              if (args.length < 1 || args[0] != 'exo') {
+                repl.print("Commands should start with exo. Try exo --h for a list of commands.")  
+              } else {
+                $.ajax({
+                  type: 'POST', 
+                  url: '/api', 
+                  contentType: 'application/json; charset=UTF-8',
+                  data: JSON.stringify({args: args}),
+                  dataType: 'json',
+                  success: function(data, status, xhr) {
+                    console.log(status);
+                    console.log(xhr);
+                    repl.print(data.stdout + '\n' + data.stderr);
+                  },
+                  error: function(xhr, type) {
+                    console.log(xhr);
+                    console.log(type);
+                    repl.print('ajax error: ' + xhr.status);
+                  }
+                });
+              }
           } catch (error) {
-              repl.print(error, "error");
+              repl.print(error, "exception in eval");
           }
       };
     </script>

@@ -41,7 +41,10 @@ def api():
         else:
             return make_response('stdin must be a string', 400)
 
-    args = ['exo'] + body['args']
+    if len(body) > 0 and body['args'][0] == 'exo':
+        args = body['args']
+    else:
+        args = ['exo'] + body['args']
     result = exo.run(args, stdin=stdin)
     return jsonify({
         "exitcode": result.exitcode,
