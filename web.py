@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from six import string_types
 from flask import Flask
 from flask.json import jsonify
