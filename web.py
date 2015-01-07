@@ -14,9 +14,9 @@ app.debug = True
 def hello():
     return '''<html><body>Welcome to Exonline, the web site for a command line for a web site. Try this:
        <pre>
-       $ curl exonline.herokuapp.com/api -d '{"args": ["tree", "CIK-HERE"]'
+       $ curl exonline.herokuapp.com/api -d '{"args": ["tree", "CIK-HERE"]}'
        </pre>
-        </body></html>'''
+       </body></html>'''
 
 @app.route('/api', methods=['POST'])
 def api():

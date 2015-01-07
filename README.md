@@ -1,0 +1,42 @@
+# Exonline
+
+Exonline is a hosted version of [Exoline](https://github.com/exosite/exoline), which is itself a command line application for a web-based product. So silly. But it has some features (i.e. spec) that would be handy to have as an API, and someday it'd be nice to have a live REPL demo, and this could be the back end for that. You can see Exonline running at [http://exonline.herokuapp.com](http://exonline.herokuapp.com).
+
+Here's an example. To call the hosted version of Exoline, do this:
+
+```
+$ curl exonline.herokuapp.com/api -d '{"args": ["lookup", "fac7..."]}'
+{
+    "exitcode": 0,
+    "stderr": "",
+    "stdout": "0394b6b901b558584f6f97b26b4c46f8bcba05d5"
+}
+```
+
+To see what version of Exoline is running, do this:
+
+```
+$ curl exonline.herokuapp.com/api -d '{"args": ["--version"]}'
+{
+    "exitcode": null,
+    "stderr": "",
+    "stdout": "Exosite Command Line 0.9.5"
+}
+```
+
+If you're working at the command line, you might use the excellent [jq](http://stedolan.github.io/jq/) to reconstitute the output:
+
+```
+$ curl exonline.herokuapp.com/api -d '{"args": ["twee", "fac7..."]}' | jq .stdout -r
+######################################################################## 100.0%
+Attic    cl cik: fac7...
+  ├─Battery      dp.s battery: 88 (an hour ago)
+  ├─Contact      dp.s contact: closed (an hour ago)
+  ├─Event        dp.s event: moved (an hour ago)
+  ├─LQI          dp.s lqi: 100 (an hour ago)
+  ├─RSSI         dp.s rssi: -41 (an hour ago)
+  ├─Temperature  dp.s temperature: 55 (an hour ago)
+  ├─X            dp.i threeAxis.x: -995 (an hour ago)
+  ├─Y            dp.i threeAxis.y: -32 (an hour ago)
+  └─Z            dp.i threeAxis.z: 36 (an hour ago)
+```
