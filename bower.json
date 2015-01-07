@@ -1,0 +1,30 @@
+{
+  "name": "exon",
+  "version": "0.0.0",
+  "homepage": "https://github.com/dweaver/exon",
+  "authors": [
+    "Dan Weaver <danweaver@exosite.com>"
+  ],
+  "description": "Exoline as a web service",
+  "keywords": [
+    "exosite",
+    "exoline",
+    "cli",
+    "iot",
+    "hardware"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "codemirror": "~4.10.0",
+    "codemirror-repl": "aaditmshah/codemirror-repl",
+    "zepto": "~1.1.6"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "name": "codemirror-repl",
+  "homepage": "https://github.com/aaditmshah/codemirror-repl",
+  "_release": "34ca29f40e",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "34ca29f40e15b0beeb8142734f5654ab6c68b24f"
+  },
+  "_source": "git://github.com/aaditmshah/codemirror-repl.git",
+  "_target": "*",
+  "_originalSource": "aaditmshah/codemirror-repl",
+  "_direct": true
+}

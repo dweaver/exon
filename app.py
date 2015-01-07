@@ -8,6 +8,7 @@ from flask import request
 from flask import make_response
 from flask import render_template
 from flask_sslify import SSLify
+import requests
 from exoline import exo
 from exoline import __version__ as version
 
@@ -18,6 +19,14 @@ sslify = SSLify(app)
 @app.route('/')
 def hello():
     return render_template('index.html', version=version)
+
+@app.route('/repl')
+def repl():
+    r = requests.get('http://cik.herokuapp.com')
+    tempcik = None
+    if r.status_code == 200:
+        tempcik = r.text
+    return render_template('repl.html', version=version, tempcik=tempcik)
 
 @app.route('/api', methods=['POST'])
 def api():
