@@ -1,19 +1,22 @@
 # -*- coding: utf-8 -*-
+import os
 
 from six import string_types
 from flask import Flask
 from flask.json import jsonify
 from flask import request
 from flask import make_response
+from flask_sslify import SSLify
 from exoline import exo
 from exoline import __version__ as version
 
 app = Flask(__name__)
-app.debug = True
+app.debug = os.environ.get('DEBUG', False)
+sslify = SSLify(app)
 
 @app.route('/')
 def hello():
-    return '''<html><body><div>Welcome to Exon, a web service for <a href="https://github.com/exosite/exoline">Exoline</a>. Exon lets you run Exoline commands without installing Exoline. Here's an example that creates a 1 hour temporary device, sets it up with a temperature conversion script, and does a conversion.</div>
+    return '''<html><body><div>Exon is a web service for <a href="https://github.com/exosite/exoline">Exoline</a>. Use Exon to run Exoline commands when you don't have Exoline installed. Here's an example that creates a 1 hour temporary device, uses the Exoline spec command to create two dataports, and creates a temperature conversion <a href="http://docs.exosite.com/scripting">Lua script</a>, and does a conversion.</div>
 
 <pre>
 $ <strong>TEMPCIK=`curl --silent cik.herokuapp.com`</strong>
@@ -24,7 +27,7 @@ $ <strong>exon -d '{"args": ["spec", "'$TEMPCIK'", "http://tinyurl.com/exospec-t
   "stderr": "",
   "stdout": "Running spec on: 23713c7a99d613c85e280d5f0126acda62624c0b\ntemp_f not found.\nCreating dataport with name: temp_f, alias: temp_f, format: float\ntemp_c not found.\nCreating dataport with name: temp_c, alias: temp_c, format: float\nconvert.lua not found.\nNew script RID: 2996e4b25b80b08d233a9f8622447a78f87bef6c\nAliased script to: convert.lua"
 }
-$ <strong>exon -d '{"args": ["write", "'$TEMPCIK'", "temp_c", "--value=32"]}'</strong>
+$ <strong>exon -d '{"args": ["write", "'$TEMPCIK'", "temp_c", "--value=0"]}'</strong>
 {
   "exitcode": 0,
   "stderr": "",
@@ -36,11 +39,17 @@ $ <strong>exon -d '{"args": ["update", "'$TEMPCIK'", "temp_f", "-"], "stdin": "{
   "stderr": "",
   "stdout": "ok"
 }
+$ <strong>exon -d '{"args": ["read", "'$TEMPCIK'", "temp_f"]}'</strong>
+{
+  "exitcode": 0,
+  "stderr": "",
+  "stdout": "2015-01-07 11:44:23-06:00,32.0"
+}
 $ <strong>exon -d '{"args": ["twee", "'$TEMPCIK'"]}' | jq .stdout -r</strong>
 Temporary CIK    cl cik: 23713c7a99d613c85e280d5f0126acda62624c0b
-  ├─temp_c                                 dp.f temp_c: 32.0 (just now)
-  ├─This is the temperature in Fahrenheit  dp.f temp_f: 89.6 (just now)
-  └─convert.lua                            dr.s convert.lua: line 9: Converted 32.000000C to 89.600000F (just now)
+  ├─temp_c                                 dp.f temp_c: 0.0 (just now)
+  ├─This is the temperature in Fahrenheit  dp.f temp_f: 32.0 (just now)
+  └─convert.lua                            dr.s convert.lua: line 9: Converted 0.000000C to 0.000000F (just now)
 </pre>
 
 <div>Now serving <a href="https://pypi.python.org/pypi/exoline/''' + version + '">Exoline ' + version + '''</a></div>

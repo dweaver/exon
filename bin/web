@@ -1,0 +1,7 @@
+#!/bin/sh
+
+if [ "$FLASK_ENV" == "development" ]; then
+        gunicorn app:app -w 3
+else
+        gunicorn app:app -w 3
+fi

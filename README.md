@@ -40,3 +40,20 @@ Attic    cl cik: fac7...
   ├─Y            dp.i threeAxis.y: -32 (an hour ago)
   └─Z            dp.i threeAxis.z: 36 (an hour ago)
 ```
+
+## Running locally
+
+Create a file called `.env` like this:
+
+```
+FLASK_ENV=development
+DEBUG=True
+```
+
+This gives you debug mode when running locally. Run the server:
+
+```
+$ foreman start
+```
+
+You can then use Exon at http://localhost:5000.
