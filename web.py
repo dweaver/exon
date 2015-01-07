@@ -1,12 +1,8 @@
-from pprint import pprint
-import json
-
 from six import string_types
 from flask import Flask
 from flask.json import jsonify
 from flask import request
 from flask import make_response
-
 from exoline import exo
 from exoline import __version__ as version
 
@@ -15,18 +11,35 @@ app.debug = True
 
 @app.route('/')
 def hello():
-    return '''<html><body><div>Welcome to Exon, a web service for <a href="https://github.com/exosite/exoline">Exoline</a>, which is a command line tool for a <a href="https://exosite.com">web service</a>. Check out this code, which creates a 1 hour temporary device, sets it up with a temperature conversion script, and does a conversion.</div>
+    return '''<html><body><div>Welcome to Exon, a web service for the <a href="https://github.com/exosite/exoline">Exoline</a> command line tool. Here's an example which creates a 1 hour temporary device, sets it up with a temperature conversion script, and does a conversion.</div>
 
        <pre>
        $ TEMPCIK=`curl cik.herokuapp.com`
-       $ alias exon='curl exon.herokuapp.com/api '
+       $ alias exon='curl --silent exon.herokuapp.com/api '
        $ exon -d '{"args": ["spec", "'$TEMPCIK'", "http://tinyurl.com/exospec-tempconvert", "--create"]}'
+{
+  "exitcode": 0,
+  "stderr": "",
+  "stdout": "Running spec on: 23713c7a99d613c85e280d5f0126acda62624c0b\ntemp_f not found.\nCreating dataport with name: temp_f, alias: temp_f, format: float\ntemp_c not found.\nCreating dataport with name: temp_c, alias: temp_c, format: float\nconvert.lua not found.\nNew script RID: 2996e4b25b80b08d233a9f8622447a78f87bef6c\nAliased script to: convert.lua"
+}
        $ exon -d '{"args": ["write", "'$TEMPCIK'", "temp_c", "--value=32"]}'
-       $ exon -d '{"args": ["update", "'$TEMPCIK'", "temp_f", "-"], "stdin": "{\"name\": \"This is the temperature in Fahrenheit\"}"}'
+{
+  "exitcode": 0,
+  "stderr": "",
+  "stdout": ""
+}
+       $ exon -d '{"args": ["update", "'$TEMPCIK'", "temp_f", "-"], "stdin": "{\\"name\\": \\"This is the temperature in Fahrenheit\\"}"}'
+{
+  "exitcode": 0,
+  "stderr": "",
+  "stdout": "ok"
+}
        $ exon -d '{"args": ["twee", "'$TEMPCIK'"]}' | jq .stdout -r
+Temporary CIK    cl cik: 23713c7a99d613c85e280d5f0126acda62624c0b
+  ├─temp_c                                 dp.f temp_c: 32.0 (just now)
+  ├─This is the temperature in Fahrenheit  dp.f temp_f: 89.6 (just now)
+  └─convert.lua                            dr.s convert.lua: line 9: Converted 32.000000C to 89.600000F (just now)
        </pre>
-
-       <div>Implementing a command line tool for accessing Exon is left as an exercise for the reader. :-)</div>
 
        <div>Now serving <a href="https://pypi.python.org/pypi/exoline/''' + version + '">Exoline ' + version + '''</a></div>
        </body></html>'''
@@ -39,13 +52,13 @@ def api():
         return make_response('missing or bad args', 400)
     stdin=None
     if 'stdin' in body:
-        if type(body(stdin)) is str:
-            stdin = body
+        if isinstance(body['stdin'], string_types):
+            stdin = body['stdin']
         else:
             return make_response('stdin must be a string', 400)
 
-    args = ['exo'] + request.get_json(force=True)['args']
-    result = exo.run(args)
+    args = ['exo'] + body['args']
+    result = exo.run(args, stdin=stdin)
     return jsonify({
         "exitcode": result.exitcode,
         "stdout": result.stdout,
