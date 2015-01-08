@@ -1,6 +1,6 @@
 # Exon
 
-Exon is a hosted version of [Exoline](https://github.com/exosite/exoline), which is itself a command line application for a web-based product. So it's maybe a bit silly. But it has some features (e.g spec) that would be handy to have as an API. You can see Exon running at [https://exon.herokuapp.com](https://exon.herokuapp.com) including a [REPL](https://exon.herokuapp.com/repl).
+Exon is a web API for [Exoline](https://github.com/exosite/exoline), which is itself a command line application for a web-based product. So it's maybe a bit silly. But it has some features (e.g spec) that would be handy to have as an API. You can see Exon running at [https://exon.herokuapp.com](https://exon.herokuapp.com) including a [REPL](https://exon.herokuapp.com/repl).
 
 Here's an example. To call the hosted version of Exoline, do this:
 
