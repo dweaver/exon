@@ -5,6 +5,7 @@
     <script src="static/bower_components/codemirror-repl/scripts/codemirror-repl.js"></script>
     <script src="static/bower_components/zepto/zepto.min.js"></script>
     <script src="static/bower_components/lodash/dist/lodash.min.js"></script>
+    <!-- <script src="static/bower_components/ansi_up/ansi_up.js"></script> -->
     <script src="static/js/shellquote.js"></script>
   </head>
   <body>
@@ -15,11 +16,14 @@
           theme: "eclipse"
       });
       repl.print("Exoline {{ version }}");
-      repl.print('Type an Exoline command, e.g. "exo --help" or "exo tree $CIK" or "exo spec $CIK http://tinyurl.com/exospec-tempconvert --create"');
+      repl.print('Type an Exoline command, e.g. "exo --help" or "exo twee $CIK" or "exo spec $CIK http://tinyurl.com/exospec-tempconvert --create"');
       repl.print('(WARNING: $CIK will be automatically deleted after an hour. To create');
-      repl.print('a device you can keep, sign up for a free Exosite account at ');
+      repl.print('a permanent device, sign up for a free Exosite account at ');
       repl.print('https://account.exosite.com/signup)');
       var ENV = {'CIK': '{{ tempcik }}'};
+      function stripAnsi(s) {
+        return s.replace(/\x1b\[[0-9;]*m/g, '');
+      }
       repl.eval = function (code) {
           try {
               var args = shellquote.parse(code, ENV);
@@ -38,7 +42,9 @@
                   success: function(data, status, xhr) {
                     console.log(status);
                     console.log(xhr);
-                    repl.print(data.stdout + '\n' + data.stderr);
+
+                    repl.print(stripAnsi(data.stdout) + '\n' + stripAnsi(data.stderr));
+                    //repl.print(ansi_up.ansi_to_html(data.stdout) + '\n' + ansi_up.ansi_to_html(data.stderr));
                   },
                   error: function(xhr, type) {
                     console.log(xhr);
