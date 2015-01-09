@@ -16,11 +16,15 @@
           theme: "eclipse"
       });
       repl.print("Exoline {{ version }}");
-      repl.print('Type an Exoline command, e.g. "exo --help" or "exo twee $CIK" or "exo spec $CIK http://tinyurl.com/exospec-tempconvert --create"');
-      repl.print('(WARNING: $CIK will be automatically deleted after an hour. To create');
-      repl.print('a permanent device, sign up for a free Exosite account at ');
-      repl.print('https://account.exosite.com/signup)');
-      var ENV = {'CIK': '{{ tempcik }}'};
+      repl.print("This sandbox has a temporary device with $cik: {{ tempcik }}");
+      repl.print('    exo --help');
+      repl.print('    exo twee $cik');
+      repl.print('    exo spec $cik http://tinyurl.com/exospec-tempconvert --create');
+      repl.print('    exo write $cik temp_c --value=0');
+      repl.print('If you want a permanent device, sign up for a free Exosite account at https://account.exosite.com/signup');
+      repl.print('You can install the full version of Exoline here: https://github.com/exosite/exoline');
+
+      var ENV = {'cik': '{{ tempcik }}'};
       function stripAnsi(s) {
         return s.replace(/\x1b\[[0-9;]*m/g, '');
       }
