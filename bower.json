@@ -23,10 +23,11 @@
     "tests"
   ],
   "dependencies": {
+    "ansi_up": "*",
     "codemirror": "~4.10.0",
     "codemirror-repl": "aaditmshah/codemirror-repl",
-    "zepto": "~1.1.6",
+    "d3": "~3.5.6",
     "lodash": "~2.4.1",
-    "ansi_up": "*"
+    "zepto": "~1.1.6"
   }
 }
