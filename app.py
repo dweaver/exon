@@ -48,12 +48,13 @@ def check(result):
 def example2():
     return jsonify({
         "tree": {
-    "name": "flare",
+    "name": "client",
     "children": [
     {
-    "name": "analytics",
+    "name": "client",
     "children": [
-        {"name": "another"}
+        {"name": "dataport"},
+        {"name": "dataport"}
         ]
     }
     ]
